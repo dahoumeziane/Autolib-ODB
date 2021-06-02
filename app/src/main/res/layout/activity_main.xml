@@ -180,8 +180,9 @@
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:background="@drawable/_5px_stroke_green"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -191,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:text="Speed"
 
-                            android:textColor="#b0B0B0"
+                            android:textColor="#51F919"
                             android:textSize="14sp">
 
                         </TextView>
@@ -201,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="120km/h"
-                            android:textColor="#000"
+                            android:textColor="#51F919"
                             android:textSize="22sp">
 
                         </TextView>
@@ -220,9 +221,10 @@
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:background="@drawable/_10px_stroke_blue"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -231,7 +233,7 @@
                             android:layout_height="wrap_content"
                             android:text="Fuel Level"
 
-                            android:textColor="#b0B0B0"
+                            android:textColor="#19A7F9"
                             android:textSize="14sp">
 
                         </TextView>
@@ -241,7 +243,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="70%"
-                            android:textColor="#000"
+                            android:textColor="#19A7F9"
                             android:textSize="22sp">
 
                         </TextView>
@@ -260,9 +262,10 @@
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:background="@drawable/_5px_stroke_orange"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -271,7 +274,7 @@
                             android:layout_height="wrap_content"
                             android:text="Distance"
 
-                            android:textColor="#b0B0B0"
+                            android:textColor="#F9C319"
                             android:textSize="14sp">
 
                         </TextView>
@@ -281,7 +284,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="12800km"
-                            android:textColor="#000"
+                            android:textColor="#F9C319"
                             android:textSize="22sp">
 
                         </TextView>
@@ -300,9 +303,10 @@
                     app:cardCornerRadius="10dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:background="@drawable/_10px_stroke_red"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -311,7 +315,7 @@
                             android:layout_height="wrap_content"
                             android:text="Engine temp"
 
-                            android:textColor="#b0B0B0"
+                            android:textColor="#F9192C"
                             android:textSize="14sp">
 
                         </TextView>
@@ -321,7 +325,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:text="39 C°"
-                            android:textColor="#000"
+                            android:textColor="#F9192C"
                             android:textSize="22sp">
 
                         </TextView>
