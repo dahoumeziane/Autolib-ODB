@@ -21,8 +21,11 @@ class MainActivity : FragmentActivity() , OnMapReadyCallback {
 
     override fun onMapReady(p0: GoogleMap) {
         map = p0
-        val latLng = LatLng(19.169257, 73.341601)
+        val latLng = LatLng(36.704998, 3.173918)
         map!!.addMarker(MarkerOptions().position(latLng).title("Your position"))
-        map!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+
+        val zoomLevel = 16.0f //This goes up to 21
+
+        map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
     }
 }
