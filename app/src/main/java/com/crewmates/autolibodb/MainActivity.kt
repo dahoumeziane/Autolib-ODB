@@ -23,9 +23,7 @@ class MainActivity : FragmentActivity() , OnMapReadyCallback {
         map = p0
         val latLng = LatLng(36.704998, 3.173918)
         map!!.addMarker(MarkerOptions().position(latLng).title("Your position"))
-
         val zoomLevel = 16.0f //This goes up to 21
-
         map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
     }
 }
