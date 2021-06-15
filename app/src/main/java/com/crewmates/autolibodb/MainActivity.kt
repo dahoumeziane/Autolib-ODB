@@ -6,9 +6,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
+import com.crewmates.autolibodb.model.Location
+import com.crewmates.autolibodb.repository.Repository
+import com.crewmates.autolibodb.viewModel.MainViewModel
+import com.crewmates.autolibodb.viewModel.MainViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -17,14 +26,30 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : FragmentActivity(), OnMapReadyCallback {
+ class MainActivity : FragmentActivity(), OnMapReadyCallback {
     var map: GoogleMap? = null
+     companion object {
+         @JvmStatic lateinit var viewModel: MainViewModel
+         @JvmStatic lateinit var context : LifecycleOwner
+     }
+
+
+
     private val REQUEST_CODE_LOCATION_PERMISSION = 1
+       var latitude = 0.0
+       var longitude = 0.0
 
 
+     override fun onStart() {
+         super.onStart()
+         context=this
+         val repository = Repository()
+         val viewModelFactory = MainViewModelFactory(repository)
+         viewModel = ViewModelProvider(this,viewModelFactory)
+             .get(MainViewModel::class.java)
+     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
         val mapFragment =
             (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
@@ -50,12 +75,19 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
 
     }
 
+
     override fun onMapReady(p0: GoogleMap) {
         map = p0
-        val latLng = LatLng(36.704998, 3.173918)
+        val latLng : LatLng = if (longitude> 0){
+            LatLng(latitude, longitude)
+        }else {
+            LatLng(36.704998, 3.173918)
+        }
+
         map!!.addMarker(MarkerOptions().position(latLng).title("Your position"))
         val zoomLevel = 16.0f //This goes up to 21
         map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
+
     }
 
     override fun onRequestPermissionsResult(
@@ -76,19 +108,17 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
     private fun isLocationServiceRunning(): Boolean {
         val activityManager =
             getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        if (activityManager != null) {
-            for (service in activityManager.getRunningServices(
-                Int.MAX_VALUE
-            )) {
-                if (LocationService::class.java.name == service.service.className) {
-                    if (service.foreground) {
-                        return true
-                    }
+        for (service in activityManager.getRunningServices(
+            Int.MAX_VALUE
+        )) {
+            if (LocationService::class.java.name == service.service.className) {
+                if (service.foreground) {
+                    return true
                 }
             }
-            return false
         }
         return false
+
     }
 
     private fun startLocationService() {

@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class MainActivity2 extends AppCompatActivity {
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
-    public int latitude;
+    public static int latitude;
 
     public int getLatitude() {
         return latitude;
@@ -29,6 +29,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
         findViewById(R.id.startLocationUpdate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
