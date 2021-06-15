@@ -86,9 +86,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
             LatLng(36.704998, 3.173918)
         }
 
-        gmap!!.addMarker(MarkerOptions().position(latLng).title("Your position"))
-        val zoomLevel = 16.0f //This goes up to 21
-        gmap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
+
 
     }
      fun updateTemp(){
