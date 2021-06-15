@@ -1,7 +1,10 @@
 package com.crewmates.autolibodb
 
 import android.Manifest
-import android.app.*
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,25 +12,27 @@ import android.os.Build
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import com.crewmates.autolibodb.MainActivity.Companion.viewModel
 import com.crewmates.autolibodb.model.Location
-import com.crewmates.autolibodb.repository.Repository
 import com.crewmates.autolibodb.viewModel.MainViewModel
-import com.crewmates.autolibodb.viewModel.MainViewModelFactory
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 class LocationService : Service() {
 
+    companion object {
+        @JvmStatic  var isMyServiceRunning = false
+
+    }
 
     private fun updateLocation(latitude: Double,longitude: Double){
 
@@ -47,6 +52,10 @@ class LocationService : Service() {
                 Log.d("error", "location not uploaded")
             }
         })
+        val latLng = LatLng(latitude, longitude)
+        MainActivity.gmap!!.addMarker(MarkerOptions().position(latLng).title("Your position"))
+        val zoomLevel = 16.0f //This goes up to 21
+        MainActivity.gmap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
     }
 
     private val locationCallback: LocationCallback = object : LocationCallback() {

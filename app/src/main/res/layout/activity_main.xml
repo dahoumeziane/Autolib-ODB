@@ -250,7 +250,16 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Good morning Harkat Kamel"
+            android:textColor="#000"
+            android:layout_marginBottom="10dp"
+            android:textSize="30sp"
+            android:textStyle="bold">
 
+        </TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -413,7 +422,7 @@
                         android:layout_height="wrap_content"
                         android:text="Engine temp"
 
-                        android:textColor="#F9192C"
+                        android:textColor="#F96B19"
                         android:textSize="14sp">
 
                     </TextView>
@@ -423,7 +432,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="39 C°"
-                        android:textColor="#F9192C"
+                        android:textColor="#F96B19"
+                        android:id="@+id/tempDisplay"
                         android:textSize="25sp">
 
                     </TextView>
@@ -434,12 +444,7 @@
 
 
         </LinearLayout>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Start location update">
 
-        </Button>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -6,15 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
-import com.crewmates.autolibodb.model.Location
 import com.crewmates.autolibodb.repository.Repository
 import com.crewmates.autolibodb.viewModel.MainViewModel
 import com.crewmates.autolibodb.viewModel.MainViewModelFactory
@@ -23,14 +21,17 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.random.Random
 
- class MainActivity : FragmentActivity(), OnMapReadyCallback {
-    var map: GoogleMap? = null
+class MainActivity : FragmentActivity(), OnMapReadyCallback {
      companion object {
          @JvmStatic lateinit var viewModel: MainViewModel
          @JvmStatic lateinit var context : LifecycleOwner
+
+         @JvmStatic var gmap : GoogleMap? = null
      }
 
 
@@ -72,23 +73,42 @@ import kotlinx.android.synthetic.main.activity_main.*
         stopLocationUpdate.setOnClickListener {
             stopLocationService()
         }
+        updateTemp()
 
     }
 
 
     override fun onMapReady(p0: GoogleMap) {
-        map = p0
+        gmap = p0
         val latLng : LatLng = if (longitude> 0){
             LatLng(latitude, longitude)
         }else {
             LatLng(36.704998, 3.173918)
         }
 
-        map!!.addMarker(MarkerOptions().position(latLng).title("Your position"))
+        gmap!!.addMarker(MarkerOptions().position(latLng).title("Your position"))
         val zoomLevel = 16.0f //This goes up to 21
-        map!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
+        gmap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
 
     }
+     fun updateTemp(){
+         var countDownTimer: CountDownTimer? = null
+
+         countDownTimer = object : CountDownTimer(30000, 1000) {
+             override fun onTick(l: Long) {
+                 val rnds = Random.nextInt(50,60)
+                 tempDisplay.text=(rnds.toString()+"C°")
+                 Log.d("tick", "onTick: $l")
+             }
+
+             override fun onFinish() {
+                 //timeout
+
+             }
+         }
+         countDownTimer.start()
+
+     }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -106,18 +126,8 @@ import kotlinx.android.synthetic.main.activity_main.*
     }
 
     private fun isLocationServiceRunning(): Boolean {
-        val activityManager =
-            getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (service in activityManager.getRunningServices(
-            Int.MAX_VALUE
-        )) {
-            if (LocationService::class.java.name == service.service.className) {
-                if (service.foreground) {
-                    return true
-                }
-            }
-        }
-        return false
+
+        return LocationService.isMyServiceRunning
 
     }
 
@@ -126,6 +136,7 @@ import kotlinx.android.synthetic.main.activity_main.*
             val intent = Intent(applicationContext, LocationService::class.java)
             intent.action = Constants.ACTION_START_LOCATION_SERVICE
             startService(intent)
+            LocationService.isMyServiceRunning = true
             Toast.makeText(this, "Location service started", Toast.LENGTH_SHORT).show()
 
         }
@@ -133,10 +144,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 
     private fun stopLocationService() {
         if (isLocationServiceRunning()) {
+            LocationService.isMyServiceRunning = false
             val intent = Intent(applicationContext, LocationService::class.java)
             intent.action = Constants.ACTION_STOP_LOCATION_SERVICE
             startService(intent)
-            Toast.makeText(this, "Location service stoped", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Location service stopped", Toast.LENGTH_SHORT).show()
         }
     }
 }
