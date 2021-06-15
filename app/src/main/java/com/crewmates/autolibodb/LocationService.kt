@@ -29,11 +29,11 @@ import com.google.android.gms.location.LocationServices
 class LocationService : Service() {
 
 
-    private fun updateLocation(){
+    private fun updateLocation(latitude: Double,longitude: Double){
 
 
         val location = Location(
-            23.2, 23.5,10)
+            latitude, longitude,16)
         viewModel.addPosition(location)
         viewModel.locationResponse.observe(MainActivity.context, Observer {
                 response ->
@@ -59,7 +59,7 @@ class LocationService : Service() {
 
             MainActivity.updateLocation()*/
             Log.d("Location update", "$latitude, $longitude")
-            updateLocation()
+            updateLocation(latitude,longitude)
         }
     }
 
