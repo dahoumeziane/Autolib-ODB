@@ -42,6 +42,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
          @JvmStatic lateinit var context : LifecycleOwner
          @JvmStatic lateinit var temperatureDisplay : TextView
          @JvmStatic var gmap : GoogleMap? = null
+
      }
 
     private lateinit var sharedViewModel: SharedViewModel

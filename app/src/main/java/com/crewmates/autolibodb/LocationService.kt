@@ -29,6 +29,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlin.math.ceil
+import kotlin.math.floor
 import kotlin.random.Random
 
 class LocationService : Service() {
@@ -36,11 +38,8 @@ class LocationService : Service() {
     companion object {
         @JvmStatic  var isMyServiceRunning = false
 
-        @JvmStatic  var time2 = null
     }
-    private fun updateState(){
-
-        val state = VehicleState(updateTemp(),1,16,30,10,89,10,100,10000)
+    private fun updateState(state : VehicleState){
         viewModel.updateTechState(state)
         viewModel.stateResponse.observe(MainActivity.context, Observer {
                 response ->
@@ -69,6 +68,7 @@ class LocationService : Service() {
                 Log.d("error", "location not uploaded")
             }
         })
+        MainActivity.gmap!!.clear()
         val latLng = LatLng(latitude, longitude)
         MainActivity.gmap!!.addMarker(MarkerOptions().position(latLng).title("Your position").icon(BitmapDescriptorFactory.fromResource(R.drawable.icon)))
         val zoomLevel = 16.0f //This goes up to 21
@@ -89,19 +89,28 @@ class LocationService : Service() {
             MainActivity.updateLocation()*/
             Log.d("Location update", "$latitude, $longitude")
             Prefs.locations.add(locationResult.lastLocation)
-            var speed = locationResult.lastLocation.time
-
+            var speed = locationResult.lastLocation.speed
+            Log.d("Total distance", "${(Prefs.distance)}"+"km")
             speed = (speed*3600)/1000
             Log.d("time", "$speed"+"s")
             Log.d("Distance", "${Prefs.locations.size}"+"locations")
             if ( Prefs.locations.size > 2) {
                 val loc1 = Prefs.locations[Prefs.locations.size-2]
                 val loc2 = Prefs.locations[Prefs.locations.size-1]
+                val distance = loc1.distanceTo(loc2).toInt()
                 Log.d("Distance", "${loc1.distanceTo(loc2)}"+"m")
+                Prefs.distance += (loc1.distanceTo(loc2)/1000)
+                val vidange = 210000
+                Log.d("Kilos", "${Prefs.distance}"+"km")
+                Log.d("Vidange", "${(vidange)}"+"km")
+                if( Prefs.distance > vidange){
+                    //Alert agents 3la lvidange
+                    Log.d("Vidange", "Alert dir vidange")
+                }
+                updateState(VehicleState(updateTemp(),10,16,40,30,70,40,speed.toInt(),distance))
 
             }
             updateLocation(latitude,longitude)
-            updateState()
         }
     }
 
