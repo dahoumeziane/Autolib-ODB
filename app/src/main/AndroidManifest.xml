@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.AutolibODB">
+        <activity android:name=".init.WelcomAct"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -35,7 +36,7 @@
         <service
             android:name=".LocationService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
     </application>
 
 </manifest>
