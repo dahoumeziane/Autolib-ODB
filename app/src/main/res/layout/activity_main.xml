@@ -489,15 +489,15 @@
 
                             </TextView>
 
-                            <fragment
+                            <com.google.android.gms.maps.MapView
                                 android:id="@+id/map"
-                                android:name="com.google.android.gms.maps.SupportMapFragment"
+                                android:apiKey="@string/map_key"
                                 android:layout_width="match_parent"
                                 android:layout_height="400dp"
                                 android:layout_marginTop="5dp"
                                 android:scaleType="centerCrop">
 
-                            </fragment>
+                            </com.google.android.gms.maps.MapView>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
