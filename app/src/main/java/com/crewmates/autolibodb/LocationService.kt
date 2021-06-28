@@ -20,6 +20,7 @@ import com.crewmates.autolibodb.MainActivity.Companion.temperatureDisplay
 import com.crewmates.autolibodb.MainActivity.Companion.viewModel
 import com.crewmates.autolibodb.model.Location
 import com.crewmates.autolibodb.model.VehicleState
+import com.crewmates.autolibodb.utils.Prefs
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -28,7 +29,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.random.Random
 
 class LocationService : Service() {
@@ -36,6 +36,7 @@ class LocationService : Service() {
     companion object {
         @JvmStatic  var isMyServiceRunning = false
 
+        @JvmStatic  var time2 = null
     }
     private fun updateState(){
 
@@ -72,17 +73,33 @@ class LocationService : Service() {
         MainActivity.gmap!!.addMarker(MarkerOptions().position(latLng).title("Your position").icon(BitmapDescriptorFactory.fromResource(R.drawable.icon)))
         val zoomLevel = 16.0f //This goes up to 21
         MainActivity.gmap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
+
     }
 
     private val locationCallback: LocationCallback = object : LocationCallback() {
+
         override fun onLocationResult(locationResult: LocationResult) {
             super.onLocationResult(locationResult)
+
             val latitude = locationResult.lastLocation.latitude
             val longitude = locationResult.lastLocation.longitude
+
            /* MainActivity.latitude = latitude
             MainActivity.longitude = longitude
             MainActivity.updateLocation()*/
             Log.d("Location update", "$latitude, $longitude")
+            Prefs.locations.add(locationResult.lastLocation)
+            var speed = locationResult.lastLocation.time
+
+            speed = (speed*3600)/1000
+            Log.d("time", "$speed"+"s")
+            Log.d("Distance", "${Prefs.locations.size}"+"locations")
+            if ( Prefs.locations.size > 2) {
+                val loc1 = Prefs.locations[Prefs.locations.size-2]
+                val loc2 = Prefs.locations[Prefs.locations.size-1]
+                Log.d("Distance", "${loc1.distanceTo(loc2)}"+"m")
+
+            }
             updateLocation(latitude,longitude)
             updateState()
         }
