@@ -29,6 +29,6 @@ object RetrofitInstance {
             .build()
     }
     val stateApi : TechDetailsUpdateApi by lazy {
-        retrofitLocation.create(TechDetailsUpdateApi::class.java)
+        retrofitState.create(TechDetailsUpdateApi::class.java)
     }
 }

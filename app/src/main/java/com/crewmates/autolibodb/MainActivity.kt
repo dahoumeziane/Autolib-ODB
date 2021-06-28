@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
@@ -30,7 +31,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
      companion object {
          @JvmStatic lateinit var viewModel: MainViewModel
          @JvmStatic lateinit var context : LifecycleOwner
-
+         @JvmStatic lateinit var temperatureDisplay : TextView
          @JvmStatic var gmap : GoogleMap? = null
      }
 
@@ -48,6 +49,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
          val viewModelFactory = MainViewModelFactory(repository)
          viewModel = ViewModelProvider(this,viewModelFactory)
              .get(MainViewModel::class.java)
+         temperatureDisplay= findViewById(R.id.tempDisplay)
      }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +75,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         stopLocationUpdate.setOnClickListener {
             stopLocationService()
         }
-        updateTemp()
+
 
     }
 
@@ -89,24 +91,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
 
 
     }
-     fun updateTemp(){
-         var countDownTimer: CountDownTimer? = null
 
-         countDownTimer = object : CountDownTimer(30000, 1000) {
-             override fun onTick(l: Long) {
-                 val rnds = Random.nextInt(50,60)
-                 tempDisplay.text=(rnds.toString()+"C°")
-                 Log.d("tick", "onTick: $l")
-             }
-
-             override fun onFinish() {
-                 //timeout
-
-             }
-         }
-         countDownTimer.start()
-
-     }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

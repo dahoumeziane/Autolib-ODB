@@ -9,14 +9,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.CountDownTimer
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Observer
+import com.crewmates.autolibodb.MainActivity.Companion.temperatureDisplay
 import com.crewmates.autolibodb.MainActivity.Companion.viewModel
 import com.crewmates.autolibodb.model.Location
+import com.crewmates.autolibodb.model.VehicleState
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -25,6 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.random.Random
 
 class LocationService : Service() {
 
@@ -32,7 +37,19 @@ class LocationService : Service() {
         @JvmStatic  var isMyServiceRunning = false
 
     }
+    private fun updateState(){
 
+        val state = VehicleState(updateTemp(),1,16,30,10,89,10,100,10000)
+        viewModel.updateTechState(state)
+        viewModel.stateResponse.observe(MainActivity.context, Observer {
+                response ->
+            if (response.isSuccessful){
+                Log.d("State uploaded", "success")
+            }else {
+                Log.d("error", "state not uploaded")
+            }
+        })
+    }
     private fun updateLocation(latitude: Double,longitude: Double){
 
 
@@ -67,6 +84,7 @@ class LocationService : Service() {
             MainActivity.updateLocation()*/
             Log.d("Location update", "$latitude, $longitude")
             updateLocation(latitude,longitude)
+            updateState()
         }
     }
 
@@ -157,5 +175,25 @@ class LocationService : Service() {
             }
         }
         return super.onStartCommand(intent, flags, startId)
+    }
+    fun updateTemp() : Int{
+        var countDownTimer: CountDownTimer? = null
+        val rnds = Random.nextInt(50,60)
+        countDownTimer = object : CountDownTimer(30000, 1000) {
+            override fun onTick(l: Long) {
+
+                temperatureDisplay.text=(rnds.toString()+"C°")
+                Log.d("tick", "onTick: $l")
+
+            }
+
+            override fun onFinish() {
+                //timeout
+
+            }
+        }
+        countDownTimer.start()
+        return rnds
+
     }
 }
