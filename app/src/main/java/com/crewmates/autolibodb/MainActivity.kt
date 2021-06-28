@@ -43,7 +43,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
          @JvmStatic lateinit var temperatureDisplay : TextView
          @JvmStatic var gmap : GoogleMap? = null
      }
-    private lateinit var dashboardViewModel: SharedViewModel
+
     private lateinit var sharedViewModel: SharedViewModel
 
     private lateinit var mSocket: Socket
@@ -100,8 +100,6 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        dashboardViewModel =
-            ViewModelProvider(this).get(SharedViewModel::class.java)
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
