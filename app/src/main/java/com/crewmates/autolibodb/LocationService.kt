@@ -14,16 +14,15 @@ import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.crewmates.autolibodb.MainActivity.Companion.viewModel
 import com.crewmates.autolibodb.model.Location
-import com.crewmates.autolibodb.viewModel.MainViewModel
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -53,7 +52,7 @@ class LocationService : Service() {
             }
         })
         val latLng = LatLng(latitude, longitude)
-        MainActivity.gmap!!.addMarker(MarkerOptions().position(latLng).title("Your position"))
+        MainActivity.gmap!!.addMarker(MarkerOptions().position(latLng).title("Your position").icon(BitmapDescriptorFactory.fromResource(R.drawable.icon)))
         val zoomLevel = 16.0f //This goes up to 21
         MainActivity.gmap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
     }
@@ -65,7 +64,6 @@ class LocationService : Service() {
             val longitude = locationResult.lastLocation.longitude
            /* MainActivity.latitude = latitude
             MainActivity.longitude = longitude
-
             MainActivity.updateLocation()*/
             Log.d("Location update", "$latitude, $longitude")
             updateLocation(latitude,longitude)
