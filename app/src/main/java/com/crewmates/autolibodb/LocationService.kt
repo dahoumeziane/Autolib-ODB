@@ -29,8 +29,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlin.math.ceil
-import kotlin.math.floor
 import kotlin.random.Random
 
 class LocationService : Service() {
@@ -50,8 +48,8 @@ class LocationService : Service() {
             }
         })
     }
-    private fun updateLocation(latitude: Double,longitude: Double){
 
+    private fun updateLocation(latitude: Double,longitude: Double){
 
         val location = Location(
             latitude, longitude,16)
@@ -222,4 +220,6 @@ class LocationService : Service() {
         return rnds
 
     }
+
+
 }

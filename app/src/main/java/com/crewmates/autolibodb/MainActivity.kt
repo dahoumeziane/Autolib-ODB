@@ -1,13 +1,9 @@
 package com.crewmates.autolibodb
 
 import android.Manifest
-import android.app.ActivityManager
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -15,17 +11,14 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.crewmates.autolibodb.repository.Repository
+import com.crewmates.autolibodb.utils.Prefs
 import com.crewmates.autolibodb.viewModel.MainViewModel
 import com.crewmates.autolibodb.viewModel.MainViewModelFactory
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.random.Random
 
 class MainActivity : FragmentActivity(), OnMapReadyCallback {
      companion object {
@@ -51,6 +44,17 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
          viewModel = ViewModelProvider(this,viewModelFactory)
              .get(MainViewModel::class.java)
          temperatureDisplay= findViewById(R.id.tempDisplay)
+
+         //Initialization of fields
+         val distance = intent.getDoubleExtra("distance", 0.0)
+         val fuel = intent.getIntExtra("fuel", 0)
+         val temp = intent.getIntExtra("temperature", 0)
+         val oilChange = intent.getDoubleExtra("nextOilChange", 0.0)
+         Prefs.oilChange = oilChange
+         Prefs.temperature= temp
+         Prefs.fuelLevel = fuel
+         Prefs.distance = distance
+
      }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
