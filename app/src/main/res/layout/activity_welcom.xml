@@ -52,7 +52,30 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/monteserrat_semibold"
+                        android:text="Numero de chassis"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold">
 
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/numeroChassis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/_5px_stroke_grey"
+                        android:hint="Set your car Chasis number"
+
+                        android:padding="6dp"
+                        android:textSize="22sp">
+
+                    </EditText>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

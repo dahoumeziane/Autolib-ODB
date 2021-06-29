@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import com.crewmates.autolibodb.MainActivity.Companion.temperatureDisplay
 import com.crewmates.autolibodb.MainActivity.Companion.viewModel
 import com.crewmates.autolibodb.model.Location
+import com.crewmates.autolibodb.model.Task
 import com.crewmates.autolibodb.model.VehicleState
 import com.crewmates.autolibodb.utils.Prefs
 import com.google.android.gms.location.LocationCallback
@@ -90,22 +91,25 @@ class LocationService : Service() {
             var speed = locationResult.lastLocation.speed
             Log.d("Total distance", "${(Prefs.distance)}"+"km")
             speed = (speed*3600)/1000
-            Log.d("time", "$speed"+"s")
+            Log.d("speed", "$speed"+"s")
             Log.d("Distance", "${Prefs.locations.size}"+"locations")
             if ( Prefs.locations.size > 2) {
                 val loc1 = Prefs.locations[Prefs.locations.size-2]
                 val loc2 = Prefs.locations[Prefs.locations.size-1]
-                val distance = loc1.distanceTo(loc2).toInt()
+
                 Log.d("Distance", "${loc1.distanceTo(loc2)}"+"m")
                 Prefs.distance += (loc1.distanceTo(loc2)/1000)
-                val vidange = 210000
+                val vidange = Prefs.oilChange
+
                 Log.d("Kilos", "${Prefs.distance}"+"km")
                 Log.d("Vidange", "${(vidange)}"+"km")
+
                 if( Prefs.distance > vidange){
                     //Alert agents 3la lvidange
-                    Log.d("Vidange", "Alert dir vidange")
+                    alertOilChange(task = Task(1,Prefs.idVehicule,"Cette tâche est pour faire la vidange de la voiture et réinisitaliser le kilométrage de la prochaine vidange."
+                    ,"Task : Vidange",1,2))
                 }
-                updateState(VehicleState(updateTemp(),10,16,40,30,70,40,speed.toInt(),distance.toDouble()))
+                updateState(VehicleState(updateTemp(),Prefs.idBorn,Prefs.idRental,Prefs.fuelLevel,Prefs.oilPressure,Prefs.batteryCharge,Prefs.brakeFluid,speed.toInt(),Prefs.distance,Prefs.oilChange))
 
             }
             updateLocation(latitude,longitude)
@@ -219,6 +223,18 @@ class LocationService : Service() {
         countDownTimer.start()
         return rnds
 
+    }
+
+    fun alertOilChange(task : Task) {
+        viewModel.alertOilChange(task)
+        viewModel.stateResponse.observe(MainActivity.context, Observer {
+                response ->
+            if (response.isSuccessful){
+                Log.d("Alert sent", "success")
+            }else {
+                Log.d("error", "alert not sent")
+            }
+        })
     }
 
 

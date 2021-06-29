@@ -9,6 +9,8 @@ class VehicleState (
     val batteryCharge: Int,
     val brakeFuild: Int,
     val speed: Int,
-    val kilos: Double
+
+    val kilos: Double,
+    val vidange: Int
 
 )

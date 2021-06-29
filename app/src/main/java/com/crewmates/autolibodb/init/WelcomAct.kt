@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.crewmates.autolibodb.MainActivity
 import com.crewmates.autolibodb.R
+import com.crewmates.autolibodb.model.VehicleState
 import com.crewmates.autolibodb.repository.Repository
 import com.crewmates.autolibodb.viewModel.MainViewModel
 import com.crewmates.autolibodb.viewModel.MainViewModelFactory
@@ -25,37 +26,57 @@ class WelcomAct : AppCompatActivity() {
         val initialDistance = findViewById<EditText>(R.id.initialDistance)
         val fuellevel = findViewById<EditText>(R.id.fuelLevel)
         val temperature = findViewById<EditText>(R.id.temperature)
-        go.setOnClickListener {
+        val chasis = findViewById<EditText>(R.id.numeroChassis)
+       /* go.setOnClickListener {
             val dist = initialDistance.text.toString()
             val i = Intent(this@WelcomAct, MainActivity::class.java)
             i.putExtra("distance", java.lang.Double.valueOf(dist))
-            i.putExtra("fuel", java.lang.Double.valueOf(fuellevel.text.toString()))
+            i.putExtra("fuel", fuellevel.text.toString().toInt())
+
             i.putExtra(
                 "temperature",
-                java.lang.Double.valueOf(temperature.text.toString())
+                temperature.text.toString().toInt()
             )
             startActivity(i)
-        }
+        }*/
 
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this,viewModelFactory)
             .get(MainViewModel::class.java)
-        viewModel.getState()
+      /*  viewModel.getState()
         viewModel.stateres.observe(this, Observer {
                 response ->
             Log.d("Response", response.idRental.toString())
             go.setOnClickListener {
+
                 val dist = initialDistance.text.toString()
                 val i = Intent(this@WelcomAct, MainActivity::class.java)
                 i.putExtra("distance", java.lang.Double.valueOf(dist))
-                i.putExtra("fuel", java.lang.Double.valueOf(fuellevel.text.toString()))
-                i.putExtra("idRental", response.idRental.toString())
+                i.putExtra("fuel", fuellevel.text.toString().toInt())
+                i.putExtra("idRental", response.idRental)
                 i.putExtra(
                     "temperature",
-                    java.lang.Double.valueOf(temperature.text.toString())
+                   temperature.text.toString().toInt()
                 )
-                startActivity(i)
+
+               // startActivity(i)
+            }
+        })*/
+        go.setOnClickListener {
+
+        }
+
+
+    }
+    private fun createVs(){
+        viewModel.createVs("AF1LM2")
+        viewModel.resStatCreated.observe(this, Observer {
+                response ->
+            if (response.isSuccessful){
+                Log.d("State created", "success")
+            }else {
+                Log.d("error", "state not uploaded")
             }
         })
     }

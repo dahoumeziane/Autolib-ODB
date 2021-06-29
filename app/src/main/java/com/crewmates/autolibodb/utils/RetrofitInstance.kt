@@ -5,6 +5,7 @@ import com.crewmates.autolibodb.api.LocationUpdateApi
 import com.crewmates.autolibodb.api.TechDetailsUpdateApi
 import com.crewmates.autolibodb.utils.Constants.Companion.LOCATION_BASE_URL
 import com.crewmates.autolibodb.utils.Constants.Companion.STATE_BASE_URL
+import com.crewmates.autolibodb.utils.Constants.Companion.TASK_BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -31,5 +32,16 @@ object RetrofitInstance {
 
     val stateApi : TechDetailsUpdateApi by lazy {
         retrofitState.create(TechDetailsUpdateApi::class.java)
+    }
+
+    private val retrofitTask by lazy {
+        Retrofit.Builder()
+            .baseUrl(TASK_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    val taskApi : TechDetailsUpdateApi by lazy {
+        retrofitTask.create(TechDetailsUpdateApi::class.java)
     }
 }
