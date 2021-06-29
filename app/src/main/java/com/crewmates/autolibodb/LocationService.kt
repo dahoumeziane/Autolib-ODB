@@ -105,7 +105,7 @@ class LocationService : Service() {
                     //Alert agents 3la lvidange
                     Log.d("Vidange", "Alert dir vidange")
                 }
-                updateState(VehicleState(updateTemp(),10,16,40,30,70,40,speed.toInt(),distance))
+                updateState(VehicleState(updateTemp(),10,16,40,30,70,40,speed.toInt(),distance.toDouble()))
 
             }
             updateLocation(latitude,longitude)

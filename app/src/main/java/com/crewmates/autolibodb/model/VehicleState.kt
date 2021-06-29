@@ -9,6 +9,6 @@ class VehicleState (
     val batteryCharge: Int,
     val brakeFuild: Int,
     val speed: Int,
-    val kilos: Int
+    val kilos: Double
 
 )

@@ -24,10 +24,11 @@ object RetrofitInstance {
 
     private val retrofitState by lazy {
         Retrofit.Builder()
-            .baseUrl(STATE_BASE_URL)
+            .baseUrl("https://f6b5996c99de.ngrok.io")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
     val stateApi : TechDetailsUpdateApi by lazy {
         retrofitState.create(TechDetailsUpdateApi::class.java)
     }

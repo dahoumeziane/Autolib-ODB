@@ -10,10 +10,16 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class MainViewModel(private val repository: Repository): ViewModel() {
+    val stateres: MutableLiveData<VehicleState> = MutableLiveData()
 
     val locationResponse: MutableLiveData<Response<Location>> = MutableLiveData()
     val stateResponse: MutableLiveData<Response<VehicleState>> = MutableLiveData()
-
+    fun getState(){
+        viewModelScope.launch {
+            val response: VehicleState = repository.getState()
+            stateres.value = response
+        }
+    }
     fun addPosition(location: Location){
         viewModelScope.launch {
             val response: Response<Location> = repository.addPosition(location)

@@ -15,4 +15,7 @@ class Repository {
     suspend fun updateVehicleState(state : VehicleState) : Response<VehicleState> {
         return RetrofitInstance.stateApi.updateVehicleState(state)
     }
+    suspend fun getState(): VehicleState {
+        return RetrofitInstance.stateApi.getState()
+    }
 }

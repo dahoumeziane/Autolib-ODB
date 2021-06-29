@@ -49,7 +49,9 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
          val distance = intent.getDoubleExtra("distance", 0.0)
          val fuel = intent.getIntExtra("fuel", 0)
          val temp = intent.getIntExtra("temperature", 0)
+         val idRental = intent.getIntExtra("idRental", 0)
          val oilChange = intent.getDoubleExtra("nextOilChange", 0.0)
+         Prefs.idRental = idRental
          Prefs.oilChange = oilChange
          Prefs.temperature= temp
          Prefs.fuelLevel = fuel
