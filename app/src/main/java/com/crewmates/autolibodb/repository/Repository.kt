@@ -18,8 +18,8 @@ class Repository {
     suspend fun alertOilChange(task : Task) : Response<Task> {
         return RetrofitInstance.taskApi.alertOilChange(task)
     }
-    suspend fun getState(): VehicleState {
-        return RetrofitInstance.stateApi.getState()
+    suspend fun getState(chassisNumber : String): Vehicle {
+        return RetrofitInstance.stateApi.getState(chassisNumber)
     }
     suspend fun createVs(chassisNumber : String) : Response<StateResponse> {
         return RetrofitInstance.stateApi.createVs(chassisNumber)

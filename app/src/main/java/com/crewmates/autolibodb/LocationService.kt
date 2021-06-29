@@ -16,6 +16,7 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Observer
+import com.crewmates.autolibodb.MainActivity.Companion.speedDisplay
 import com.crewmates.autolibodb.MainActivity.Companion.temperatureDisplay
 import com.crewmates.autolibodb.MainActivity.Companion.viewModel
 import com.crewmates.autolibodb.model.Location
@@ -91,20 +92,22 @@ class LocationService : Service() {
             var speed = locationResult.lastLocation.speed
             Log.d("Total distance", "${(Prefs.distance)}"+"km")
             speed = (speed*3600)/1000
-            Log.d("speed", "$speed"+"s")
+            Log.d("speed", "$speed"+"km/h")
+            speedDisplay.text = "${speed.toInt()}"+"km/h"
             Log.d("Distance", "${Prefs.locations.size}"+"locations")
             if ( Prefs.locations.size > 2) {
                 val loc1 = Prefs.locations[Prefs.locations.size-2]
                 val loc2 = Prefs.locations[Prefs.locations.size-1]
 
                 Log.d("Distance", "${loc1.distanceTo(loc2)}"+"m")
-                Prefs.distance += (loc1.distanceTo(loc2)/1000)
-                val vidange = Prefs.oilChange
+                Prefs.distance += (loc1.distanceTo(loc2)/1000).toInt()
+                MainActivity.distanceDisplay.text =  Prefs.distance.toString() + "km"
+
 
                 Log.d("Kilos", "${Prefs.distance}"+"km")
-                Log.d("Vidange", "${(vidange)}"+"km")
+                Log.d("Vidange", "${(Prefs.oilChange)}"+"km")
 
-                if( Prefs.distance > vidange){
+                if( Prefs.distance > Prefs.oilChange){
                     //Alert agents 3la lvidange
                     alertOilChange(task = Task(1,Prefs.idVehicule,"Cette tâche est pour faire la vidange de la voiture et réinisitaliser le kilométrage de la prochaine vidange."
                     ,"Task : Vidange",1,2))
@@ -211,7 +214,7 @@ class LocationService : Service() {
             override fun onTick(l: Long) {
 
                 temperatureDisplay.text=(rnds.toString()+"C°")
-                Log.d("tick", "onTick: $l")
+
 
             }
 

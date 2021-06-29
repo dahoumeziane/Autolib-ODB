@@ -7,7 +7,7 @@ import kotlin.collections.ArrayList
 object Prefs {
     var locations =
         ArrayList<Location>()
-    var distance : Double = 209999.7
+    var distance : Int = 0
     var oilChange : Int = 0
     var idRental : Int = 20
     var idVehicule : Int = 3

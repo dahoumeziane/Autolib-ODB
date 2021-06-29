@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 class MainViewModel(private val repository: Repository): ViewModel() {
-    val stateres: MutableLiveData<VehicleState> = MutableLiveData()
+    val stateres: MutableLiveData<Vehicle> = MutableLiveData()
     val taskRes: MutableLiveData<Response<Task>> = MutableLiveData()
     val rentalRes: MutableLiveData<RentalInfo> = MutableLiveData()
 
@@ -18,9 +18,9 @@ class MainViewModel(private val repository: Repository): ViewModel() {
     val stateResponse: MutableLiveData<Response<VehicleState>> = MutableLiveData()
     val resStatCreated: MutableLiveData<Response<StateResponse>> = MutableLiveData()
 
-    fun getState(){
+    fun getState(chassisNumber: String){
         viewModelScope.launch {
-            val response: VehicleState = repository.getState()
+            val response: Vehicle = repository.getState(chassisNumber)
             stateres.value = response
         }
     }

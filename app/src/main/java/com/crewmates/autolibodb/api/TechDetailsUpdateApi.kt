@@ -1,8 +1,5 @@
 package com.crewmates.autolibodb.api
-import com.crewmates.autolibodb.model.RentalInfo
-import com.crewmates.autolibodb.model.StateResponse
-import com.crewmates.autolibodb.model.Task
-import com.crewmates.autolibodb.model.VehicleState
+import com.crewmates.autolibodb.model.*
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -17,8 +14,10 @@ interface TechDetailsUpdateApi {
         @Body state : VehicleState
     ): Response<VehicleState>
 
-    @GET("getVehicleInformations?chassisNumber=AF1LM2")
-    suspend fun getState():VehicleState
+    @GET("getVehicleInformations")
+    suspend fun getState(
+        @Query("chassisNumber") chassisNumber: String
+    ):Vehicle
 
     @POST("service-task/task")
     suspend fun alertOilChange(

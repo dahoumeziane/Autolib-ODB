@@ -25,6 +25,8 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
          @JvmStatic lateinit var viewModel: MainViewModel
          @JvmStatic lateinit var context : LifecycleOwner
          @JvmStatic lateinit var temperatureDisplay : TextView
+         @JvmStatic lateinit var speedDisplay : TextView
+         @JvmStatic lateinit var distanceDisplay : TextView
          @JvmStatic var gmap : GoogleMap? = null
 
      }
@@ -44,18 +46,22 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
          viewModel = ViewModelProvider(this,viewModelFactory)
              .get(MainViewModel::class.java)
          temperatureDisplay= findViewById(R.id.tempDisplay)
-
+         speedDisplay=findViewById(R.id.speed)
+         distanceDisplay=findViewById(R.id.distance)
          //Initialization of fields
-         val distance = intent.getDoubleExtra("distance", 0.0)
+         val distance = intent.getIntExtra("distance", 0)
          val fuel = intent.getIntExtra("fuel", 0)
          val temp = intent.getIntExtra("temperature", 0)
          val idRental = intent.getIntExtra("idRental", 0)
          val oilChange = intent.getIntExtra("nextOilChange", 0)
+         val idBorn = intent.getIntExtra("IdBorne", 0)
          Prefs.idRental = idRental
          Prefs.oilChange = oilChange
          Prefs.temperature= temp
          Prefs.fuelLevel = fuel
          Prefs.distance = distance
+         Prefs.idBorn = idBorn
+         fullname.text = "Good morning "+intent.getStringExtra("fullName")
 
      }
     override fun onCreate(savedInstanceState: Bundle?) {
