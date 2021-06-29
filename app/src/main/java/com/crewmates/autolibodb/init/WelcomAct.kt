@@ -64,7 +64,7 @@ class WelcomAct : AppCompatActivity() {
             }
         })*/
         go.setOnClickListener {
-
+            createVs()
         }
 
 
@@ -75,6 +75,11 @@ class WelcomAct : AppCompatActivity() {
                 response ->
             if (response.isSuccessful){
                 Log.d("State created", "success")
+                viewModel.getRentalInfo("AF1LM2")
+                viewModel.rentalRes.observe(this, Observer {
+                        response ->
+                   Log.d("response",response.tenantFirstName)
+                })
             }else {
                 Log.d("error", "state not uploaded")
             }

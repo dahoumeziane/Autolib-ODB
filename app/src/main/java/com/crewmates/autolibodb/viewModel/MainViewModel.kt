@@ -3,10 +3,7 @@ package com.crewmates.autolibodb.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.crewmates.autolibodb.model.Location
-import com.crewmates.autolibodb.model.StateResponse
-import com.crewmates.autolibodb.model.Task
-import com.crewmates.autolibodb.model.VehicleState
+import com.crewmates.autolibodb.model.*
 import com.crewmates.autolibodb.repository.Repository
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -15,6 +12,7 @@ import retrofit2.Response
 class MainViewModel(private val repository: Repository): ViewModel() {
     val stateres: MutableLiveData<VehicleState> = MutableLiveData()
     val taskRes: MutableLiveData<Response<Task>> = MutableLiveData()
+    val rentalRes: MutableLiveData<RentalInfo> = MutableLiveData()
 
     val locationResponse: MutableLiveData<Response<Location>> = MutableLiveData()
     val stateResponse: MutableLiveData<Response<VehicleState>> = MutableLiveData()
@@ -42,6 +40,12 @@ class MainViewModel(private val repository: Repository): ViewModel() {
         viewModelScope.launch {
             val response: Response<StateResponse> = repository.createVs(chassisNumber)
             resStatCreated.value = response
+        }
+    }
+    fun getRentalInfo(chassisNumber : String){
+        viewModelScope.launch {
+            val response: RentalInfo = repository.getRentalInfo(chassisNumber)
+            rentalRes.value = response
         }
     }
 

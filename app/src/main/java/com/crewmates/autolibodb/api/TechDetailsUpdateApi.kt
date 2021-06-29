@@ -1,4 +1,5 @@
 package com.crewmates.autolibodb.api
+import com.crewmates.autolibodb.model.RentalInfo
 import com.crewmates.autolibodb.model.StateResponse
 import com.crewmates.autolibodb.model.Task
 import com.crewmates.autolibodb.model.VehicleState
@@ -29,4 +30,9 @@ interface TechDetailsUpdateApi {
     suspend fun createVs(
         @Query("chassisNumber") chassisNumber: String
     ): Response<StateResponse>
+
+    @GET("getRentalInfo")
+    suspend fun getRentalInfo(
+        @Query("chassisNumber") chassisNumber: String
+    ): RentalInfo
 }
