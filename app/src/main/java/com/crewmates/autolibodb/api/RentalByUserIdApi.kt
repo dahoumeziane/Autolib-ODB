@@ -8,15 +8,15 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RentalByUserIdApi {
-   /* @GET("getRental/{idUser} ")
+   @GET("getRental/{idUser} ")
         suspend fun getRental(
            @Path("idUser")idUser : Int
-        ): Response<RentalBillVehicle>*/
+        ): Response<RentalBillVehicle>
 
-    @GET("getRental ")
+    /*@GET("getRental ")
     suspend fun getRental(
         @Query("idUser")idUser : Int
-    ): Response<RentalBillVehicle>
+    ): Response<RentalBillVehicle>*/
    /* @GET("getRentalInfo")
     suspend fun getRentalInfo(
         @Query("chassisNumber") chassisNumber: String

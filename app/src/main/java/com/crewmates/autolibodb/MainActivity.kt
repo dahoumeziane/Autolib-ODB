@@ -66,15 +66,13 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
          Prefs.distance = distance
          Prefs.idBorn = idBorn
          fullname.text = "Good morning "+intent.getStringExtra("fullName")
+         getbillrental(2)
+
 
      }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Logger.getLogger(MainActivity::class.java.name).warning("dans le create..")
-        prixpDisplay.setOnClickListener {
-            getbillrental(2)
-        }
 
         val mapFragment =
             (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
@@ -98,6 +96,9 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
             stopLocationService()
         }
 
+        prixpDisplay.setOnClickListener {
+        getbillrental(2)
+        }
 
     }
 
@@ -157,20 +158,20 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         }
     }
     private fun getbillrental(idUser:Int){
-        Logger.getLogger(MainActivity::class.java.name).warning("Hello..")
 
         var p=""
         val repository=Repository()
-        val viewModelFactory= RentalViewModelFactory(repository)
-        val  viewM=ViewModelProvider(this,viewModelFactory).get(RentalViewModel::class.java)
+        val RviewModelFactory= RentalViewModelFactory(repository)
+        val  viewM=ViewModelProvider(this,RviewModelFactory).get(RentalViewModel::class.java)
 
         viewM.getRental(idUser)
 
         viewM.rentalbillRes.observe(MainActivity.context , Observer {
                 response ->
             if (response.isSuccessful){
-                p=response.body()?.bill?.totalRate.toString()
-                // Toast.makeText(this, "billlllllllll"+response.body()?.bill?.totalRate.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "AVANT", Toast.LENGTH_SHORT).show()
+                prixpDisplay.text=response.body()?.bill?.totalRate.toString()
+                time_id.text=response.body()?.diffjour?.toString()+"j"+response.body()?.diffheur?.toString()+"H"+response.body()?.diffminutes?.toString()+"m"
             }else {
                 Toast.makeText(this, "UNE ERREUR S'EST PRODUITE", Toast.LENGTH_SHORT).show()
             }

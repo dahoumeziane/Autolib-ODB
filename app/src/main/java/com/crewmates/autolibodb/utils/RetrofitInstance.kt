@@ -91,8 +91,8 @@ object RetrofitInstance {
 
     val ByUserIdApi : RentalByUserIdApi by lazy {
 
-        retrofitInstance(baseUrl+"getRental/").create(RentalByUserIdApi::class.java)
-         
+        retrofitInstance(baseUrl).create(RentalByUserIdApi::class.java)
+
     }
 
 }

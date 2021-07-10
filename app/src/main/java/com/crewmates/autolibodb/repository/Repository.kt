@@ -29,7 +29,6 @@ class Repository {
         return RetrofitInstance.stateApi.getRentalInfo(chassisNumber)
     }
     suspend fun getRentalUser(idUser: Int) :Response<RentalBillVehicle>{
-        Logger.getLogger(MainActivity::class.java.name).warning("Hello22222222222222222222REPO")
         return RetrofitInstance.ByUserIdApi.getRental(idUser)
     }
 }
