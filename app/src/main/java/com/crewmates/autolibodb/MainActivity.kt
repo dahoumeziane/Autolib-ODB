@@ -9,16 +9,20 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.crewmates.autolibodb.repository.Repository
 import com.crewmates.autolibodb.utils.Prefs
 import com.crewmates.autolibodb.viewModel.MainViewModel
 import com.crewmates.autolibodb.viewModel.MainViewModelFactory
+import com.crewmates.autolibodb.viewModel.RentalViewModel
+import com.crewmates.autolibodb.viewModel.RentalViewModelFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.logging.Logger
 
 class MainActivity : FragmentActivity(), OnMapReadyCallback {
      companion object {
@@ -62,11 +66,14 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
          Prefs.distance = distance
          Prefs.idBorn = idBorn
          fullname.text = "Good morning "+intent.getStringExtra("fullName")
+         getbillrental(2)
+
 
      }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val mapFragment =
             (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
         mapFragment.getMapAsync(this)
@@ -89,6 +96,9 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
             stopLocationService()
         }
 
+        prixpDisplay.setOnClickListener {
+        getbillrental(2)
+        }
 
     }
 
@@ -146,5 +156,27 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
             startService(intent)
             Toast.makeText(this, "Location service stopped", Toast.LENGTH_SHORT).show()
         }
+    }
+    private fun getbillrental(idUser:Int){
+
+        var p=""
+        val repository=Repository()
+        val RviewModelFactory= RentalViewModelFactory(repository)
+        val  viewM=ViewModelProvider(this,RviewModelFactory).get(RentalViewModel::class.java)
+
+        viewM.getRental(idUser)
+
+        viewM.rentalbillRes.observe(MainActivity.context , Observer {
+                response ->
+            if (response.isSuccessful){
+                Toast.makeText(this, "AVANT", Toast.LENGTH_SHORT).show()
+                prixpDisplay.text=response.body()?.bill?.totalRate.toString()
+                time_id.text=response.body()?.diffjour?.toString()+"j"+response.body()?.diffheur?.toString()+"H"+response.body()?.diffminutes?.toString()+"m"
+            }else {
+                Toast.makeText(this, "UNE ERREUR S'EST PRODUITE", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
     }
 }

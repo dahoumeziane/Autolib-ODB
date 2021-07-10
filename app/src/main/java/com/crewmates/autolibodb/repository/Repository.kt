@@ -1,9 +1,10 @@
 package com.crewmates.autolibodb.repository
 
+import com.crewmates.autolibodb.MainActivity
 import com.crewmates.autolibodb.model.*
 import com.crewmates.autolibodb.utils.RetrofitInstance
-import retrofit2.Call
 import retrofit2.Response
+import java.util.logging.Logger
 
 
 class Repository {
@@ -26,5 +27,8 @@ class Repository {
     }
     suspend fun getRentalInfo(chassisNumber : String) : RentalInfo {
         return RetrofitInstance.stateApi.getRentalInfo(chassisNumber)
+    }
+    suspend fun getRentalUser(idUser: Int) :Response<RentalBillVehicle>{
+        return RetrofitInstance.ByUserIdApi.getRental(idUser)
     }
 }
