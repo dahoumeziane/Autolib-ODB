@@ -9,16 +9,20 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.crewmates.autolibodb.repository.Repository
 import com.crewmates.autolibodb.utils.Prefs
 import com.crewmates.autolibodb.viewModel.MainViewModel
 import com.crewmates.autolibodb.viewModel.MainViewModelFactory
+import com.crewmates.autolibodb.viewModel.RentalViewModel
+import com.crewmates.autolibodb.viewModel.RentalViewModelFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.logging.Logger
 
 class MainActivity : FragmentActivity(), OnMapReadyCallback {
      companion object {
@@ -67,6 +71,11 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Logger.getLogger(MainActivity::class.java.name).warning("dans le create..")
+        prixpDisplay.setOnClickListener {
+            getbillrental(2)
+        }
+
         val mapFragment =
             (supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
         mapFragment.getMapAsync(this)
@@ -146,5 +155,27 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
             startService(intent)
             Toast.makeText(this, "Location service stopped", Toast.LENGTH_SHORT).show()
         }
+    }
+    private fun getbillrental(idUser:Int){
+        Logger.getLogger(MainActivity::class.java.name).warning("Hello..")
+
+        var p=""
+        val repository=Repository()
+        val viewModelFactory= RentalViewModelFactory(repository)
+        val  viewM=ViewModelProvider(this,viewModelFactory).get(RentalViewModel::class.java)
+
+        viewM.getRental(idUser)
+
+        viewM.rentalbillRes.observe(MainActivity.context , Observer {
+                response ->
+            if (response.isSuccessful){
+                p=response.body()?.bill?.totalRate.toString()
+                // Toast.makeText(this, "billlllllllll"+response.body()?.bill?.totalRate.toString(), Toast.LENGTH_SHORT).show()
+            }else {
+                Toast.makeText(this, "UNE ERREUR S'EST PRODUITE", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
     }
 }

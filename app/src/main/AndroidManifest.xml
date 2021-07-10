@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AutolibODB">
-        <activity android:name=".init.WelcomAct">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +26,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key" />
 
-        <activity android:name=".MainActivity" android:screenOrientation="landscape">
+        <activity android:name=".init.WelcomAct" android:screenOrientation="landscape">
 
         </activity>
 

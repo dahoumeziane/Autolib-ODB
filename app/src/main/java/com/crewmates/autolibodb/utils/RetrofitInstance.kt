@@ -1,16 +1,20 @@
 package com.crewmates.autolibodb.utils
 
 
+import com.crewmates.autolibodb.MainActivity
 import com.crewmates.autolibodb.api.LocationUpdateApi
 import com.crewmates.autolibodb.api.RentalByUserIdApi
 import com.crewmates.autolibodb.api.TechDetailsUpdateApi
+import com.crewmates.autolibodb.api.baseUrl
 import com.crewmates.autolibodb.utils.Constants.Companion.LOCATION_BASE_URL
 import com.crewmates.autolibodb.utils.Constants.Companion.RENTAL_BILL_VEHICLE_URL
 import com.crewmates.autolibodb.utils.Constants.Companion.STATE_BASE_URL
 import com.crewmates.autolibodb.utils.Constants.Companion.TASK_BASE_URL
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
+import java.util.concurrent.TimeUnit
+import java.util.logging.Logger
 
 
 object RetrofitInstance {
@@ -48,14 +52,47 @@ object RetrofitInstance {
         retrofitTask.create(TechDetailsUpdateApi::class.java)
     }
 
-    private val retrofitRental by lazy {
+    /*private val retrofitRental by lazy {
+
         Retrofit.Builder()
-            .baseUrl(RENTAL_BILL_VEHICLE_URL)
+            .baseUrl("https://4aec2aaf36e8.ngrok.io/rentalUser/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
     }
 
     val RentalByUserIdApi : RentalByUserIdApi by lazy {
+
         retrofitRental.create(RentalByUserIdApi::class.java)
+
+    }*/
+
+
+    private val client by lazy {
+        OkHttpClient.Builder()
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .build()
     }
+
+
+    fun retrofitInstance(url: String): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+
+
+
+
+
+
+    val ByUserIdApi : RentalByUserIdApi by lazy {
+
+        retrofitInstance(baseUrl+"getRental/").create(RentalByUserIdApi::class.java)
+         
+    }
+
 }
