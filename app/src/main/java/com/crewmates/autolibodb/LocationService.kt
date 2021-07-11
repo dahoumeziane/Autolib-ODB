@@ -206,7 +206,7 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val action = intent.action
+        val action = intent?.action
         if (action != null) {
             if (action == Constants.ACTION_START_LOCATION_SERVICE) {
                 startLocationService()
