@@ -25,51 +25,51 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.logging.Logger
 
 class MainActivity : FragmentActivity(), OnMapReadyCallback {
-     companion object {
-         @JvmStatic lateinit var viewModel: MainViewModel
-         @JvmStatic lateinit var context : LifecycleOwner
-         @JvmStatic lateinit var temperatureDisplay : TextView
-         @JvmStatic lateinit var speedDisplay : TextView
-         @JvmStatic lateinit var distanceDisplay : TextView
-         @JvmStatic var gmap : GoogleMap? = null
+    companion object {
+        @JvmStatic lateinit var viewModel: MainViewModel
+        @JvmStatic lateinit var context : LifecycleOwner
+        @JvmStatic lateinit var temperatureDisplay : TextView
+        @JvmStatic lateinit var speedDisplay : TextView
+        @JvmStatic lateinit var distanceDisplay : TextView
+        @JvmStatic var gmap : GoogleMap? = null
 
-     }
+    }
 
 
 
     private val REQUEST_CODE_LOCATION_PERMISSION = 1
-       var latitude = 0.0
-       var longitude = 0.0
+    var latitude = 0.0
+    var longitude = 0.0
 
 
-     override fun onStart() {
-         super.onStart()
-         context=this
-         val repository = Repository()
-         val viewModelFactory = MainViewModelFactory(repository)
-         viewModel = ViewModelProvider(this,viewModelFactory)
-             .get(MainViewModel::class.java)
-         temperatureDisplay= findViewById(R.id.tempDisplay)
-         speedDisplay=findViewById(R.id.speed)
-         distanceDisplay=findViewById(R.id.distance)
-         //Initialization of fields
-         val distance = intent.getIntExtra("distance", 0)
-         val fuel = intent.getIntExtra("fuel", 0)
-         val temp = intent.getIntExtra("temperature", 0)
-         val idRental = intent.getIntExtra("idRental", 0)
-         val oilChange = intent.getIntExtra("nextOilChange", 0)
-         val idBorn = intent.getIntExtra("IdBorne", 0)
-         Prefs.idRental = idRental
-         Prefs.oilChange = oilChange
-         Prefs.temperature= temp
-         Prefs.fuelLevel = fuel
-         Prefs.distance = distance
-         Prefs.idBorn = idBorn
-         fullname.text = "Good morning "+intent.getStringExtra("fullName")
-         getbillrental(2)
+    override fun onStart() {
+        super.onStart()
+        context=this
+        val repository = Repository()
+        val viewModelFactory = MainViewModelFactory(repository)
+        viewModel = ViewModelProvider(this,viewModelFactory)
+            .get(MainViewModel::class.java)
+        temperatureDisplay= findViewById(R.id.tempDisplay)
+        speedDisplay=findViewById(R.id.speed)
+        distanceDisplay=findViewById(R.id.distance)
+        //Initialization of fields
+        val distance = intent.getIntExtra("distance", 0)
+        val fuel = intent.getIntExtra("fuel", 0)
+        val temp = intent.getIntExtra("temperature", 0)
+        val idRental = intent.getIntExtra("idRental", 0)
+        val oilChange = intent.getIntExtra("nextOilChange", 0)
+        val idBorn = intent.getIntExtra("IdBorne", 0)
+        Prefs.idRental = idRental
+        Prefs.oilChange = oilChange
+        Prefs.temperature= temp
+        Prefs.fuelLevel = fuel
+        Prefs.distance = distance
+        Prefs.idBorn = idBorn
+        fullname.text = "Good morning "+intent.getStringExtra("fullName")
+        getbillrental(idRental)
 
 
-     }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -97,7 +97,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         }
 
         prixpDisplay.setOnClickListener {
-        getbillrental(2)
+            getbillrental(2)
         }
 
     }

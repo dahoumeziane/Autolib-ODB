@@ -26,18 +26,18 @@ class WelcomAct : AppCompatActivity() {
         loading!!.setTitle("Association in progress")
 
 
-       /* go.setOnClickListener {
-            val dist = initialDistance.text.toString()
-            val i = Intent(this@WelcomAct, MainActivity::class.java)
-            i.putExtra("distance", java.lang.Double.valueOf(dist))
-            i.putExtra("fuel", fuellevel.text.toString().toInt())
+        /* go.setOnClickListener {
+             val dist = initialDistance.text.toString()
+             val i = Intent(this@WelcomAct, MainActivity::class.java)
+             i.putExtra("distance", java.lang.Double.valueOf(dist))
+             i.putExtra("fuel", fuellevel.text.toString().toInt())
 
-            i.putExtra(
-                "temperature",
-                temperature.text.toString().toInt()
-            )
-            startActivity(i)
-        }*/
+             i.putExtra(
+                 "temperature",
+                 temperature.text.toString().toInt()
+             )
+             startActivity(i)
+         }*/
 
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
@@ -55,13 +55,15 @@ class WelcomAct : AppCompatActivity() {
         viewModel.createVs(numeroChassis.text.toString())
         viewModel.resStatCreated.observe(this, Observer {
                 response ->
+            Log.d("response", response.toString())
+            Log.d("response", response.isSuccessful.toString())
             if (response.isSuccessful){
                 Log.d("State created", "success")
-                viewModel.getRentalInfo("AF1LM2")
+                viewModel.getRentalInfo(numeroChassis.text.toString())
                 val i = Intent(this@WelcomAct, MainActivity::class.java)
                 viewModel.rentalRes.observe(this, Observer {
                         response ->
-                   Log.d("response",response.tenantFirstName)
+                    Log.d("response",response.tenantFirstName)
                     i.putExtra("fullName", "${response.tenantFirstName} ${response.tenantLastName}")
                     val dist = initialDistance.text.toString()
 
