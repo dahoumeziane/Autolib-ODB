@@ -51,13 +51,13 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
 
 
 
-    private val REQUEST_CODE_LOCATION_PERMISSION = 1
+       private val REQUEST_CODE_LOCATION_PERMISSION = 1
+
+       private lateinit var mSocket: Socket
+       private var nameTablet: String? = null
        var latitude = 0.0
        var longitude = 0.0
 
-
-    private lateinit var mSocket: Socket
-    private var nameTablet: String? = null
 
      override fun onStart() {
          super.onStart()
@@ -76,17 +76,22 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
          val idRental = intent.getIntExtra("idRental", 0)
          val oilChange = intent.getIntExtra("nextOilChange", 0)
          val idBorn = intent.getIntExtra("IdBorne", 0)
+         val idVehicule = intent.getIntExtra("idVehicule", 0)
+
          Prefs.idRental = idRental
          Prefs.oilChange = oilChange
          Prefs.temperature= temp
          Prefs.fuelLevel = fuel
          Prefs.distance = distance
          Prefs.idBorn = idBorn
-         fullname.text = "En attente d'une association"
+         Prefs.idVehicle = idVehicule
+         fullname.text = "Good morning "+intent.getStringExtra("fullName")
          getbillrental(2)
 
-
      }
+
+   
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -113,7 +118,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         }
 
         prixpDisplay.setOnClickListener {
-            getbillrental(2)
+            getbillrental(Prefs.idRental)
         }
 
         val filter = IntentFilter().apply {

@@ -20,6 +20,7 @@ import com.crewmates.autolibodb.MainActivity.Companion.speedDisplay
 import com.crewmates.autolibodb.MainActivity.Companion.temperatureDisplay
 import com.crewmates.autolibodb.MainActivity.Companion.viewModel
 import com.crewmates.autolibodb.model.Location
+import com.crewmates.autolibodb.model.PannesData
 import com.crewmates.autolibodb.model.Task
 import com.crewmates.autolibodb.model.VehicleState
 import com.crewmates.autolibodb.utils.Prefs
@@ -54,7 +55,7 @@ class LocationService : Service() {
     private fun updateLocation(latitude: Double,longitude: Double){
 
         val location = Location(
-            latitude, longitude,16)
+            latitude, longitude,Prefs.idRental)
         viewModel.addPosition(location)
         viewModel.locationResponse.observe(MainActivity.context, Observer {
                 response ->
@@ -109,11 +110,11 @@ class LocationService : Service() {
 
                 if( Prefs.distance > Prefs.oilChange){
                     //Alert agents 3la lvidange
-                    alertOilChange(task = Task(1,Prefs.idVehicule,"Cette tâche est pour faire la vidange de la voiture et réinisitaliser le kilométrage de la prochaine vidange."
+                    alertOilChange(task = Task(3,Prefs.idVehicule,"Cette tâche est pour faire la vidange de la voiture et réinisitaliser le kilométrage de la prochaine vidange."
                     ,"Task : Vidange",1,2))
                 }
                 updateState(VehicleState(updateTemp(),Prefs.idBorn,Prefs.idRental,Prefs.fuelLevel,Prefs.oilPressure,Prefs.batteryCharge,Prefs.brakeFluid,speed.toInt(),Prefs.distance,Prefs.oilChange))
-
+               // detectPannes(VehicleState(updateTemp(),Prefs.idBorn,Prefs.idRental,Prefs.fuelLevel,Prefs.oilPressure,Prefs.batteryCharge,Prefs.brakeFluid,speed.toInt(),Prefs.distance,Prefs.oilChange))
             }
             updateLocation(latitude,longitude)
         }
@@ -122,6 +123,14 @@ class LocationService : Service() {
 
     override fun onBind(intent: Intent): IBinder? {
         throw UnsupportedOperationException("not yet implemented")
+    }
+    private fun detectPannes (state : VehicleState){
+        viewModel.detectPanne(panne = PannesData(state.engineTemp,state.fuelLevel,state.oilPressure,state.batteryCharge,state.brakeFuild,Prefs.idVehicle))
+        viewModel.panneRes.observe(MainActivity.context, Observer {
+                response ->
+            Log.d("Panne detection", response.message)
+        })
+
     }
 
     private fun startLocationService() {
@@ -209,7 +218,7 @@ class LocationService : Service() {
     }
     fun updateTemp() : Int{
         var countDownTimer: CountDownTimer? = null
-        val rnds = Random.nextInt(50,60)
+        val rnds = Random.nextInt(Prefs.temperature,Prefs.temperature+10)
         countDownTimer = object : CountDownTimer(30000, 1000) {
             override fun onTick(l: Long) {
 

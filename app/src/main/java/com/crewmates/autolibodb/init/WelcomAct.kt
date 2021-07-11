@@ -66,6 +66,7 @@ class WelcomAct : AppCompatActivity() {
                         response ->
                     Log.d("response",response.tenantFirstName)
                     i.putExtra("fullName", "${response.tenantFirstName} ${response.tenantLastName}")
+                    i.putExtra("idVehicule", response.idVehicle)
                     val dist = initialDistance.text.toString()
 
                     i.putExtra("distance", dist.toInt())
@@ -73,7 +74,7 @@ class WelcomAct : AppCompatActivity() {
                     i.putExtra("idRental", response.idRental)
                     i.putExtra("nextOilChange", nextOilChange.text.toString().toInt())
 
-                    Log.d("response", idBorne.toString())
+
                     Log.d("response", response.idRental.toString())
                     i.putExtra(
                         "temperature",
@@ -83,6 +84,7 @@ class WelcomAct : AppCompatActivity() {
                     viewModel.stateres.observe(this, Observer {
                             response ->
                         i.putExtra("IdBorne", response.idBorne)
+                        Log.d("response borne", idBorne.toString())
                         startActivity(i)
                         loading!!.dismiss()
                     })

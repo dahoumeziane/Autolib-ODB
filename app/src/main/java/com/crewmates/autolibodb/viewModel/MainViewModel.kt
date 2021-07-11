@@ -13,6 +13,7 @@ class MainViewModel(private val repository: Repository): ViewModel() {
     val stateres: MutableLiveData<Vehicle> = MutableLiveData()
     val taskRes: MutableLiveData<Response<Task>> = MutableLiveData()
     val rentalRes: MutableLiveData<RentalInfo> = MutableLiveData()
+    val panneRes: MutableLiveData<Message> = MutableLiveData()
 
     val locationResponse: MutableLiveData<Response<Location>> = MutableLiveData()
     val stateResponse: MutableLiveData<Response<VehicleState>> = MutableLiveData()
@@ -53,6 +54,13 @@ class MainViewModel(private val repository: Repository): ViewModel() {
         viewModelScope.launch {
             val response: Response<Task> = repository.alertOilChange(task)
             taskRes.value = response
+        }
+    }
+
+    fun detectPanne(panne: PannesData){
+        viewModelScope.launch {
+            val response: Message = repository.detectPannes(panne)
+            panneRes.value = response
         }
     }
 
