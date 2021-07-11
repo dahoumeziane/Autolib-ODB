@@ -114,7 +114,7 @@ class LocationService : Service() {
                     ,"Task : Vidange",1,2))
                 }
                 updateState(VehicleState(updateTemp(),Prefs.idBorn,Prefs.idRental,Prefs.fuelLevel,Prefs.oilPressure,Prefs.batteryCharge,Prefs.brakeFluid,speed.toInt(),Prefs.distance,Prefs.oilChange))
-               // detectPannes(VehicleState(updateTemp(),Prefs.idBorn,Prefs.idRental,Prefs.fuelLevel,Prefs.oilPressure,Prefs.batteryCharge,Prefs.brakeFluid,speed.toInt(),Prefs.distance,Prefs.oilChange))
+                detectPannes(VehicleState(updateTemp(),Prefs.idBorn,Prefs.idRental,Prefs.fuelLevel,Prefs.oilPressure,Prefs.batteryCharge,Prefs.brakeFluid,speed.toInt(),Prefs.distance,Prefs.oilChange))
             }
             updateLocation(latitude,longitude)
         }
