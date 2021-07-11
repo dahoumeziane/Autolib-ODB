@@ -39,15 +39,15 @@ import java.util.*
 var bluetoothAdapter: BluetoothAdapter? = null
 
 class MainActivity : FragmentActivity(), OnMapReadyCallback {
-     companion object {
-         @JvmStatic lateinit var viewModel: MainViewModel
-         @JvmStatic lateinit var context : LifecycleOwner
-         @JvmStatic lateinit var temperatureDisplay : TextView
-         @JvmStatic lateinit var speedDisplay : TextView
-         @JvmStatic lateinit var distanceDisplay : TextView
-         @JvmStatic var gmap : GoogleMap? = null
+    companion object {
+        @JvmStatic lateinit var viewModel: MainViewModel
+        @JvmStatic lateinit var context : LifecycleOwner
+        @JvmStatic lateinit var temperatureDisplay : TextView
+        @JvmStatic lateinit var speedDisplay : TextView
+        @JvmStatic lateinit var distanceDisplay : TextView
+        @JvmStatic var gmap : GoogleMap? = null
 
-     }
+    }
 
 
 
@@ -113,7 +113,7 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         }
 
         prixpDisplay.setOnClickListener {
-        getbillrental(2)
+            getbillrental(2)
         }
 
         val filter = IntentFilter().apply {
