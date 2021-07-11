@@ -56,14 +56,12 @@ class MainViewModel(private val repository: Repository): ViewModel() {
             taskRes.value = response
         }
     }
-<<<<<<< HEAD
 
-=======
     fun detectPanne(panne: PannesData){
         viewModelScope.launch {
             val response: Message = repository.detectPannes(panne)
             panneRes.value = response
         }
     }
->>>>>>> panne detection auto added
+
 }

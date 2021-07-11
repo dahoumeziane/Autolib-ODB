@@ -73,7 +73,7 @@ class WelcomAct : AppCompatActivity() {
                     i.putExtra("idRental", response.idRental)
                     i.putExtra("nextOilChange", nextOilChange.text.toString().toInt())
 
-                    Log.d("response", idBorne.toString())
+
                     Log.d("response", response.idRental.toString())
                     i.putExtra(
                         "temperature",
@@ -83,6 +83,7 @@ class WelcomAct : AppCompatActivity() {
                     viewModel.stateres.observe(this, Observer {
                             response ->
                         i.putExtra("IdBorne", response.idBorne)
+                        Log.d("response borne", idBorne.toString())
                         startActivity(i)
                         loading!!.dismiss()
                     })

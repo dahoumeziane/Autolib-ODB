@@ -110,11 +110,11 @@ class LocationService : Service() {
 
                 if( Prefs.distance > Prefs.oilChange){
                     //Alert agents 3la lvidange
-                    alertOilChange(task = Task(1,Prefs.idVehicule,"Cette tâche est pour faire la vidange de la voiture et réinisitaliser le kilométrage de la prochaine vidange."
+                    alertOilChange(task = Task(3,Prefs.idVehicule,"Cette tâche est pour faire la vidange de la voiture et réinisitaliser le kilométrage de la prochaine vidange."
                     ,"Task : Vidange",1,2))
                 }
                 updateState(VehicleState(updateTemp(),Prefs.idBorn,Prefs.idRental,Prefs.fuelLevel,Prefs.oilPressure,Prefs.batteryCharge,Prefs.brakeFluid,speed.toInt(),Prefs.distance,Prefs.oilChange))
-                detectPannes(VehicleState(updateTemp(),Prefs.idBorn,Prefs.idRental,Prefs.fuelLevel,Prefs.oilPressure,Prefs.batteryCharge,Prefs.brakeFluid,speed.toInt(),Prefs.distance,Prefs.oilChange))
+               // detectPannes(VehicleState(updateTemp(),Prefs.idBorn,Prefs.idRental,Prefs.fuelLevel,Prefs.oilPressure,Prefs.batteryCharge,Prefs.brakeFluid,speed.toInt(),Prefs.distance,Prefs.oilChange))
             }
             updateLocation(latitude,longitude)
         }
