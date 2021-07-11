@@ -4,152 +4,198 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="@color/purple_200"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".init.WelcomAct">
+
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
-        app:cardElevation="10dp"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="5dp"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        app:cardElevation="10dp">
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:src="@drawable/logo_yellow">
-
-            </ImageView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/monteserrat_semibold"
-                android:text="Welcome to AutoLib !"
-                android:textColor="#000"
-                android:layout_marginBottom="20dp"
-                android:textSize="30sp"
-                android:textStyle="bold">
-
-            </TextView>
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_width="600dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:gravity="center"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/logo_yellow">
+
+                </ImageView>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
                     android:fontFamily="@font/monteserrat_semibold"
-                    android:text="Initial distance"
+                    android:text="Welcome to AutoLib !"
                     android:textColor="#000"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:textStyle="bold">
 
                 </TextView>
-                <EditText
-                    android:background="@drawable/_5px_stroke_grey"
-                    android:padding="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
+
+                <LinearLayout
+                    android:layout_width="600dp"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:hint="Set your initial distance"
-                    android:inputType="number">
+                    android:gravity="start"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/monteserrat_semibold"
+                        android:text="Numero de chassis"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold">
 
-                </EditText>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/monteserrat_semibold"
-                    android:text="fuel level"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:textStyle="bold">
+                    </TextView>
 
-                </TextView>
-                <EditText
-                    android:background="@drawable/_5px_stroke_grey"
-                    android:padding="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:hint="Set initial fuel level"
-                    android:inputType="number">
+                    <EditText
+                        android:id="@+id/numeroChassis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/_5px_stroke_grey"
+                        android:hint="Set your car Chasis number"
 
-                </EditText>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/monteserrat_semibold"
-                    android:text="Temperature"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:textStyle="bold">
+                        android:padding="6dp"
+                        android:textSize="22sp">
 
-                </TextView>
-                <EditText
-                    android:background="@drawable/_5px_stroke_grey"
-                    android:padding="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:hint="Set initial temperature"
-                    android:inputType="number">
+                    </EditText>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/monteserrat_semibold"
+                        android:text="Initial distance"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold">
 
-                </EditText>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/monteserrat_semibold"
-                    android:text="Next oil change"
-                    android:textColor="#000"
-                    android:textSize="20sp"
-                    android:textStyle="bold">
+                    </TextView>
 
-                </TextView>
-                <EditText
-                    android:background="@drawable/_5px_stroke_grey"
-                    android:padding="6dp"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:hint="Set the next distance for oil change"
-                    android:inputType="number">
+                    <EditText
+                        android:id="@+id/initialDistance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/_5px_stroke_grey"
+                        android:hint="Set your initial distance"
+                        android:inputType="number"
+                        android:padding="6dp"
+                        android:textSize="22sp">
 
-                </EditText>
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:textColor="#fff"
-                    android:layout_marginTop="10dp"
-                    android:textAllCaps="false"
-                    android:textSize="24sp"
-                    android:fontFamily="@font/monteserrat_semibold"
-                    android:textStyle="bold"
-                    android:text="Let's go"
-                    android:background="@drawable/_5px_solid_orange">
+                    </EditText>
 
-                </androidx.appcompat.widget.AppCompatButton>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/monteserrat_semibold"
+                        android:text="fuel level"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold">
 
+                    </TextView>
+
+                    <EditText
+                        android:id="@+id/fuelLevel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/_5px_stroke_grey"
+                        android:hint="Set initial fuel level"
+                        android:inputType="number"
+                        android:padding="6dp"
+                        android:textSize="22sp">
+
+                    </EditText>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/monteserrat_semibold"
+                        android:text="Temperature"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/_5px_stroke_grey"
+                        android:hint="Set initial temperature"
+                        android:inputType="number"
+                        android:id="@+id/temperature"
+                        android:padding="6dp"
+                        android:textSize="22sp">
+
+                    </EditText>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/monteserrat_semibold"
+                        android:text="Next oil change"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/nextOilChange"
+                        android:background="@drawable/_5px_stroke_grey"
+                        android:hint="Set the next distance for oil change"
+                        android:inputType="numberDecimal"
+                        android:padding="6dp"
+                        android:textSize="22sp">
+
+                    </EditText>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/go"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/_5px_solid_orange"
+                        android:fontFamily="@font/monteserrat_semibold"
+                        android:text="Let's go"
+                        android:textAllCaps="false"
+                        android:textColor="#fff"
+                        android:textSize="24sp"
+                        android:textStyle="bold">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
+
     </androidx.cardview.widget.CardView>
 
 

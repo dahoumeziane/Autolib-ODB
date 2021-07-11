@@ -47,7 +47,7 @@ class LoadingActivity : AppCompatActivity() {
             opts.path = "/socket"
 
 
-            mSocket = IO.socket("http://192.168.43.222:8123", opts)
+            mSocket = IO.socket("http://54.37.87.85:7001/", opts)
             mSocket.on("connected", onConnected)
             mSocket.on("error", onError)
             mSocket.on("connect_error", onError)
