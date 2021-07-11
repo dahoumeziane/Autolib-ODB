@@ -17,6 +17,7 @@ object Prefs {
     var oilPressure : Int = 30
     var batteryCharge : Int = 70
     var brakeFluid : Int = 49
+    var idVehicle : Int = 0
      var chassisNumber : String =""
 
 }

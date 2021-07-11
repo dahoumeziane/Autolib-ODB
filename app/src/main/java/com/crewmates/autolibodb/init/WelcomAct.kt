@@ -65,6 +65,7 @@ class WelcomAct : AppCompatActivity() {
                         response ->
                     Log.d("response",response.tenantFirstName)
                     i.putExtra("fullName", "${response.tenantFirstName} ${response.tenantLastName}")
+                    i.putExtra("idVehicule", response.idVehicle)
                     val dist = initialDistance.text.toString()
 
                     i.putExtra("distance", dist.toInt())

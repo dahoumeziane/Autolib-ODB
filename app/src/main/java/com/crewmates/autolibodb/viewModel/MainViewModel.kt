@@ -13,6 +13,7 @@ class MainViewModel(private val repository: Repository): ViewModel() {
     val stateres: MutableLiveData<Vehicle> = MutableLiveData()
     val taskRes: MutableLiveData<Response<Task>> = MutableLiveData()
     val rentalRes: MutableLiveData<RentalInfo> = MutableLiveData()
+    val panneRes: MutableLiveData<Message> = MutableLiveData()
 
     val locationResponse: MutableLiveData<Response<Location>> = MutableLiveData()
     val stateResponse: MutableLiveData<Response<VehicleState>> = MutableLiveData()
@@ -55,5 +56,14 @@ class MainViewModel(private val repository: Repository): ViewModel() {
             taskRes.value = response
         }
     }
+<<<<<<< HEAD
 
+=======
+    fun detectPanne(panne: PannesData){
+        viewModelScope.launch {
+            val response: Message = repository.detectPannes(panne)
+            panneRes.value = response
+        }
+    }
+>>>>>>> panne detection auto added
 }

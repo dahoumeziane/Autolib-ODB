@@ -3,11 +3,14 @@ package com.crewmates.autolibodb.utils
 
 import com.crewmates.autolibodb.MainActivity
 import com.crewmates.autolibodb.api.LocationUpdateApi
+
 import com.crewmates.autolibodb.api.RentalByUserIdApi
+
+import com.crewmates.autolibodb.api.PanneDetectionApi
 import com.crewmates.autolibodb.api.TechDetailsUpdateApi
-import com.crewmates.autolibodb.api.baseUrl
 import com.crewmates.autolibodb.utils.Constants.Companion.LOCATION_BASE_URL
 import com.crewmates.autolibodb.utils.Constants.Companion.RENTAL_BILL_VEHICLE_URL
+import com.crewmates.autolibodb.utils.Constants.Companion.PANNE_BASE_URL
 import com.crewmates.autolibodb.utils.Constants.Companion.STATE_BASE_URL
 import com.crewmates.autolibodb.utils.Constants.Companion.TASK_BASE_URL
 import okhttp3.OkHttpClient
@@ -52,6 +55,7 @@ object RetrofitInstance {
         retrofitTask.create(TechDetailsUpdateApi::class.java)
     }
 
+
     /*private val retrofitRental by lazy {
 
         Retrofit.Builder()
@@ -91,8 +95,19 @@ object RetrofitInstance {
 
     val ByUserIdApi : RentalByUserIdApi by lazy {
 
-        retrofitInstance(baseUrl).create(RentalByUserIdApi::class.java)
+        retrofitInstance(RENTAL_BILL_VEHICLE_URL).create(RentalByUserIdApi::class.java)
 
     }
 
+
+    private val retrofitPanne by lazy {
+        Retrofit.Builder()
+            .baseUrl(PANNE_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    val panneApi : PanneDetectionApi by lazy {
+        retrofitPanne.create(PanneDetectionApi::class.java)
+    }
 }

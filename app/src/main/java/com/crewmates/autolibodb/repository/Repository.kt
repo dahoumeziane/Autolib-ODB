@@ -28,7 +28,12 @@ class Repository {
     suspend fun getRentalInfo(chassisNumber : String) : RentalInfo {
         return RetrofitInstance.stateApi.getRentalInfo(chassisNumber)
     }
+
     suspend fun getRentalUser(idUser: Int) :Response<RentalBillVehicle>{
         return RetrofitInstance.ByUserIdApi.getRental(idUser)
+    }
+    suspend fun detectPannes(panne : PannesData): Message {
+        return RetrofitInstance.panneApi.detectPanne(panne)
+
     }
 }
