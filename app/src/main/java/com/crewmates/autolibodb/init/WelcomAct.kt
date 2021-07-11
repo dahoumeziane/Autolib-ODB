@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.crewmates.autolibodb.LoadingActivity
 import com.crewmates.autolibodb.MainActivity
 import com.crewmates.autolibodb.R
 import com.crewmates.autolibodb.repository.Repository
@@ -60,7 +61,7 @@ class WelcomAct : AppCompatActivity() {
             if (response.isSuccessful){
                 Log.d("State created", "success")
                 viewModel.getRentalInfo(numeroChassis.text.toString())
-                val i = Intent(this@WelcomAct, MainActivity::class.java)
+                val i = Intent(this@WelcomAct, LoadingActivity::class.java)
                 viewModel.rentalRes.observe(this, Observer {
                         response ->
                     Log.d("response",response.tenantFirstName)
